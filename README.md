@@ -1,6 +1,6 @@
 # Getting Started
 
-```make
+```shell
 # Use Make to build and start the server.
 $ make tailwind build start
 
