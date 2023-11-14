@@ -25,7 +25,47 @@
     <link rel="manifest" href="/public/img/site.webmanifest" />
     <title>Erik's Website</title>
   </head>
-  <body>
-    <h1 class="text-3xl text-red-500 m-4 px-4">Hello World!</h1>
+  <body style="background-color: #181818">
+      <section class="text-gray-400 body-font">
+        <div
+          class="container mx-auto flex px-5 py-24 items-center justify-center flex-col"
+        >
+          <img
+            class="lg:w-2/6 md:w-3/6 w-5/6 mb-10 object-cover object-center rounded"
+            alt="hero"
+            src="/public/img/neofetch.png"
+          />
+          <div class="text-center lg:w-2/3 w-full">
+            <h1
+              class="font-serif title-font sm:text-4xl text-3xl mb-4 font-medium text-white"
+            >
+              Erik Jensson
+            </h1>
+            <p class="leading-relaxed text-red-50 mb-8 text-lg">
+              Hi, and welcome to my personal website! This is a site where I
+              talk about new, old and current techonology that intrigues me. I
+              love fiddling with my Linux machine, doing countless meaningless
+              customizations, just so that I can save a couple seconds doing
+              basic neanderthal tasks. If this strikes you as interesting, then
+              stick around.
+            </p>
+            <div class="flex justify-center">
+              <button
+                class="inline-flex text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded text-lg"
+                            onclick="location.href='/posts'"
+              >
+                            Posts
+              </button>
+              <button
+                class="ml-4 inline-flex text-red-50 bg-gray-800 border-0 py-2 px-6 focus:outline-none hover:bg-gray-700 hover:text-white rounded text-lg"
+                            onclick="location.href='/resume'"
+              >
+                            Résumé
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
   </body>
 </html>
