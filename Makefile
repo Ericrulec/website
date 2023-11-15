@@ -1,12 +1,12 @@
 tailwind:
-	./tailwindcss -i ./public/css/input.css -o ./public/css/tw.css --minify
+	./bin/tailwindcss -i ./public/css/input.css -o ./public/css/tw.css --minify
 
 build:
-	go build main.go
+	go build -o ./bin main.go
 
 run:
-	./main
+	./bin/main
 
 start:
-	make tailwind build run	
+	make -s tailwind build run	
 

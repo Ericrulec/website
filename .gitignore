@@ -1,4 +1,4 @@
 /node_modules
-main
+/bin/main
 /public/css/tw.css
 
