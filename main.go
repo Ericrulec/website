@@ -131,7 +131,15 @@ func indexHandler(w http.ResponseWriter, req *http.Request) error {
 }
 
 func postsHandler(w http.ResponseWriter, req *http.Request) error {
-	message := []byte("Hello")
-	w.Write(message)
+	q := req.URL.Query().Get("err")
+	if q != "" {
+		return errors.New(q)
+	}
+	tmpl := template.Must(template.ParseFiles("./views/test.html"))
+	if err := tmpl.Execute(w, nil); err != nil {
+		message := []byte("Something went wrong")
+		w.Write(message)
+		return nil
+	}
 	return nil
 }
