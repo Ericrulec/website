@@ -19,7 +19,7 @@ import (
 )
 
 const (
-	PORT = "3000"
+	PORT = "443"
 )
 
 type Handler func(w http.ResponseWriter, r *http.Request) error
@@ -62,7 +62,7 @@ func service() http.Handler {
 	FileServer(r, "/public", filesDir)
 
 	r.Method("GET", "/", Handler(indexHandler))
-	r.Method("GET", "/posts", Handler(postsHandler))
+	r.Method("GET", "/test", Handler(testHandler))
 
 	r.Get("/slow", func(w http.ResponseWriter, r *http.Request) {
 		// Simulates some hard work.
@@ -72,6 +72,34 @@ func service() http.Handler {
 	})
 
 	return r
+}
+
+func indexHandler(w http.ResponseWriter, req *http.Request) error {
+	q := req.URL.Query().Get("err")
+	if q != "" {
+		return errors.New(q)
+	}
+	tmpl := template.Must(template.ParseFiles("./views/index.html"))
+	if err := tmpl.Execute(w, nil); err != nil {
+		message := []byte("Something went wrong")
+		w.Write(message)
+		return nil
+	}
+	return nil
+}
+
+func testHandler(w http.ResponseWriter, req *http.Request) error {
+	q := req.URL.Query().Get("err")
+	if q != "" {
+		return errors.New(q)
+	}
+	tmpl := template.Must(template.ParseFiles("./views/test.html"))
+	if err := tmpl.Execute(w, nil); err != nil {
+		message := []byte("Something went wrong")
+		w.Write(message)
+		return nil
+	}
+	return nil
 }
 
 func main() {
@@ -107,7 +135,7 @@ func main() {
 	}()
 
 	// Run the server
-	err := server.ListenAndServe()
+	err := server.ListenAndServeTLS("cert.pem","privkey.pem")
 	if err != nil && err != http.ErrServerClosed {
 		log.Fatal(err)
 	}
@@ -116,30 +144,3 @@ func main() {
 	<-serverCtx.Done()
 }
 
-func indexHandler(w http.ResponseWriter, req *http.Request) error {
-	q := req.URL.Query().Get("err")
-	if q != "" {
-		return errors.New(q)
-	}
-	tmpl := template.Must(template.ParseFiles("./views/index.html"))
-	if err := tmpl.Execute(w, nil); err != nil {
-		message := []byte("Something went wrong")
-		w.Write(message)
-		return nil
-	}
-	return nil
-}
-
-func postsHandler(w http.ResponseWriter, req *http.Request) error {
-	q := req.URL.Query().Get("err")
-	if q != "" {
-		return errors.New(q)
-	}
-	tmpl := template.Must(template.ParseFiles("./views/test.html"))
-	if err := tmpl.Execute(w, nil); err != nil {
-		message := []byte("Something went wrong")
-		w.Write(message)
-		return nil
-	}
-	return nil
-}
