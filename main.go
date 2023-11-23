@@ -14,6 +14,8 @@ import (
 	"syscall"
 	"time"
 
+    "golang.org/x/crypto/acme/autocert"
+
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 )
@@ -135,7 +137,7 @@ func main() {
 	}()
 
 	// Run the server
-	err := server.ListenAndServeTLS("cert.pem","privkey.pem")
+	err := server.Serve(autocert.NewListener("ejen.no"))
 	if err != nil && err != http.ErrServerClosed {
 		log.Fatal(err)
 	}
