@@ -14,14 +14,14 @@ import (
 	"syscall"
 	"time"
 
-    "golang.org/x/crypto/acme/autocert"
+    //"golang.org/x/crypto/acme/autocert")
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 )
 
 const (
-	PORT = "443"
+	PORT = "3000"
 )
 
 type Handler func(w http.ResponseWriter, r *http.Request) error
@@ -137,7 +137,8 @@ func main() {
 	}()
 
 	// Run the server
-	err := server.Serve(autocert.NewListener("ejen.no"))
+    err := server.ListenAndServe()
+	// err := server.Serve(autocert.NewListener("ejen.no"))
 	if err != nil && err != http.ErrServerClosed {
 		log.Fatal(err)
 	}
