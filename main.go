@@ -64,7 +64,9 @@ func service() http.Handler {
 	FileServer(r, "/public", filesDir)
 
 	r.Method("GET", "/", Handler(indexHandler))
-	r.Method("GET", "/test", Handler(testHandler))
+	r.Method("GET", "/posts", Handler(postsHandler))
+
+	r.Method("GET", "/posts/*", Handler(contentHandler))
 
 	r.Get("/slow", func(w http.ResponseWriter, r *http.Request) {
 		// Simulates some hard work.
@@ -90,12 +92,28 @@ func indexHandler(w http.ResponseWriter, req *http.Request) error {
 	return nil
 }
 
-func testHandler(w http.ResponseWriter, req *http.Request) error {
+func postsHandler(w http.ResponseWriter, req *http.Request) error {
 	q := req.URL.Query().Get("err")
 	if q != "" {
 		return errors.New(q)
 	}
-	tmpl := template.Must(template.ParseFiles("./views/test.html"))
+	tmpl := template.Must(template.ParseFiles("./views/posts.html"))
+	if err := tmpl.Execute(w, nil); err != nil {
+		message := []byte("Something went wrong")
+		w.Write(message)
+		return nil
+	}
+	return nil
+}
+
+func contentHandler(w http.ResponseWriter, req *http.Request) error {
+	q := req.URL.Query().Get("err")
+	if q != "" {
+		return errors.New(q)
+	}
+    content_url := strings.Split(req.URL.Path, "/")[2]
+    log.Println(content_url)
+	tmpl := template.Must(template.ParseFiles("./views/content/"+content_url+".html"))
 	if err := tmpl.Execute(w, nil); err != nil {
 		message := []byte("Something went wrong")
 		w.Write(message)
