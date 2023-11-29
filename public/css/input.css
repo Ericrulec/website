@@ -2,8 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-.p {
-  font-size: 20px;
+.p .p {
+  font-size: 18px;
   line-height: 30px;
   letter-spacing: 0.002em;
   font-weight: 400;

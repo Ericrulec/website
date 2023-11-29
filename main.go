@@ -112,7 +112,6 @@ func contentHandler(w http.ResponseWriter, req *http.Request) error {
 		return errors.New(q)
 	}
     content_url := strings.Split(req.URL.Path, "/")[2]
-    log.Println(content_url)
 	tmpl := template.Must(template.ParseFiles("./views/content/"+content_url+".html"))
 	if err := tmpl.Execute(w, nil); err != nil {
 		message := []byte("Something went wrong")
