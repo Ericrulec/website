@@ -10,3 +10,11 @@ run:
 start:
 	make -s tailwind build run	
 
+docker-build:
+	docker build --name website .
+
+docker-run:
+	docker run -p 3000:3000 website
+
+docker-kill:
+	docker kill website && docker image rm website 
